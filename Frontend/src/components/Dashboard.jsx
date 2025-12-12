@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import FarmList from './FarmList';
 import FarmForm from './FarmForm';
+import SensorForm from './SensorForm';
 import SensorChart from './SensorChart';
 import AlertSystem from './AlertSystem';
-import { farmAPI, readingAPI, handleApiError } from '../services/api';
+import { farmAPI, sensorAPI, readingAPI, handleApiError } from '../services/api';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -13,6 +14,7 @@ const Dashboard = () => {
   const [readings, setReadings] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingFarm, setEditingFarm] = useState(null);
+  const [showSensorForm, setShowSensorForm] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -118,6 +120,37 @@ const Dashboard = () => {
     setEditingFarm(null);
   };
 
+  const handleAddSensor = async (sensorData) => {
+    try {
+      setError(null);
+      const response = await sensorAPI.createSensor(sensorData);
+      setSelectedFarmData((prev) => ({
+        ...prev,
+        sensors: [...(prev.sensors || []), response.data],
+      }));
+      setShowSensorForm(false);
+      alert('Sensor added successfully!');
+    } catch (err) {
+      setError(handleApiError(err));
+    }
+  };
+
+  const handleDeleteSensor = async (sensorId) => {
+    if (!window.confirm('Are you sure you want to delete this sensor?')) return;
+
+    try {
+      setError(null);
+      await sensorAPI.deleteSensor(sensorId);
+      setSelectedFarmData((prev) => ({
+        ...prev,
+        sensors: prev.sensors.filter((s) => s.id !== sensorId),
+      }));
+      alert('Sensor deleted successfully!');
+    } catch (err) {
+      setError(handleApiError(err));
+    }
+  };
+
   return (
     <div className="dashboard">
       <header className="dashboard-header">
@@ -166,18 +199,49 @@ const Dashboard = () => {
                 <h3>Farm Information</h3>
                 <p><strong>ID:</strong> {selectedFarmData.id}</p>
                 <p><strong>Active Sensors:</strong> {selectedFarmData.sensors?.length || 0}</p>
-                {selectedFarmData.sensors && selectedFarmData.sensors.length > 0 && (
-                  <div>
-                    <strong>Sensors:</strong>
-                    <ul>
-                      {selectedFarmData.sensors.map((sensor) => (
-                        <li key={sensor.id}>
-                          {sensor.type} - {sensor.location}
-                        </li>
-                      ))}
-                    </ul>
+                
+                <div className="sensors-section">
+                  <div className="sensors-header">
+                    <h4>Sensors</h4>
+                    <button 
+                      className="btn-add-sensor" 
+                      onClick={() => setShowSensorForm(!showSensorForm)}
+                    >
+                      {showSensorForm ? '✕ Close' : '+ Add Sensor'}
+                    </button>
                   </div>
-                )}
+
+                  {showSensorForm && (
+                    <SensorForm
+                      farmId={selectedFarmId}
+                      onSubmit={handleAddSensor}
+                      onCancel={() => setShowSensorForm(false)}
+                      isLoading={loading}
+                    />
+                  )}
+
+                  {selectedFarmData.sensors && selectedFarmData.sensors.length > 0 ? (
+                    <div className="sensors-list">
+                      {selectedFarmData.sensors.map((sensor) => (
+                        <div key={sensor.id} className="sensor-item">
+                          <div className="sensor-info">
+                            <span className="sensor-type">{sensor.type}</span>
+                            <span className="sensor-location">{sensor.location}</span>
+                          </div>
+                          <button 
+                            className="btn-delete-sensor"
+                            onClick={() => handleDeleteSensor(sensor.id)}
+                            title="Delete sensor"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="no-sensors">No sensors yet. Add one to get started!</p>
+                  )}
+                </div>
               </div>
             </>
           ) : (

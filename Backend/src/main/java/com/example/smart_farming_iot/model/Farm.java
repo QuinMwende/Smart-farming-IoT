@@ -14,7 +14,7 @@ public class Farm {
 
     private String location;
 
-    @OneToMany(mappedBy = "farm", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "farm", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Sensor> sensors;
 
     public Farm() {}

@@ -1,6 +1,8 @@
 package com.example.smart_farming_iot.model;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 public class Sensor {
@@ -14,7 +16,12 @@ public class Sensor {
     private String location;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Farm farm;
+
+    @Transient
+    @JsonProperty("farmId")
+    private Long farmId;
 
     public Sensor() {}
 
@@ -31,4 +38,6 @@ public class Sensor {
     public void setLocation(String location) { this.location = location; }
     public Farm getFarm() { return farm; }
     public void setFarm(Farm farm) { this.farm = farm; }
+    public Long getFarmId() { return farmId; }
+    public void setFarmId(Long farmId) { this.farmId = farmId; }
 }

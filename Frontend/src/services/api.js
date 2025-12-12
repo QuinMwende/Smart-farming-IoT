@@ -18,6 +18,16 @@ export const farmAPI = {
   deleteFarm: (id) => apiClient.delete(`/farms/${id}`),
 };
 
+// Sensor API calls
+export const sensorAPI = {
+  getAllSensors: () => apiClient.get('/sensors'),
+  getSensorById: (id) => apiClient.get(`/sensors/${id}`),
+  createSensor: (sensor) => apiClient.post('/sensors', sensor),
+  updateSensor: (id, sensor) => apiClient.put(`/sensors/${id}`, sensor),
+  deleteSensor: (id) => apiClient.delete(`/sensors/${id}`),
+  getSensorsByFarmId: (farmId) => apiClient.get(`/sensors/farm/${farmId}`),
+};
+
 // Sensor readings API
 export const readingAPI = {
   getReadings: (farmId, days = 7) =>
