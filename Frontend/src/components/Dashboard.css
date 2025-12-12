@@ -1,0 +1,144 @@
+.dashboard {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dashboard-header {
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+  color: white;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+.dashboard-header p {
+  margin: 10px 0 0;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.error-banner {
+  background-color: #ffebee;
+  color: #d32f2f;
+  padding: 12px 20px;
+  margin: 20px;
+  border-radius: 4px;
+  border-left: 4px solid #d32f2f;
+}
+
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.btn-create-farm {
+  padding: 12px 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-create-farm:hover {
+  background-color: #45a049;
+}
+
+.main-content {
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.farm-details-header {
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+}
+
+.farm-details-header h2 {
+  margin: 0 0 8px;
+  color: #333;
+}
+
+.farm-details-header p {
+  margin: 0;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.farm-info {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.farm-info h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.farm-info p {
+  margin: 8px 0;
+  color: #555;
+}
+
+.farm-info ul {
+  margin: 8px 0 0 20px;
+  padding: 0;
+}
+
+.farm-info li {
+  margin: 6px 0;
+  color: #555;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #999;
+}
+
+.empty-state h2 {
+  color: #333;
+  margin-bottom: 16px;
+}
+
+.empty-state p {
+  margin: 12px 0;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .farms-grid {
+    grid-template-columns: 1fr;
+  }
+}
