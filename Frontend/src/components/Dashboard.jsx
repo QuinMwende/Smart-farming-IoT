@@ -23,8 +23,11 @@ const Dashboard = () => {
         setLoading(true);
         setError(null);
         const response = await farmAPI.getAllFarms();
-        setFarms(response.data);
+        const farmsData = Array.isArray(response.data) ? response.data : [];
+        setFarms(farmsData);
       } catch (err) {
+        console.error('Error fetching farms:', err);
+        setFarms([]);
         setError(handleApiError(err));
       } finally {
         setLoading(false);
@@ -45,8 +48,11 @@ const Dashboard = () => {
         setSelectedFarmData(farmResponse.data);
 
         const readingsResponse = await readingAPI.getReadings(selectedFarmId, 7);
-        setReadings(readingsResponse.data);
+        const readingsData = Array.isArray(readingsResponse.data) ? readingsResponse.data : [];
+        setReadings(readingsData);
       } catch (err) {
+        console.error('Error fetching farm details:', err);
+        setReadings([]);
         setError(handleApiError(err));
       }
     };

@@ -6,7 +6,9 @@ const FarmList = ({ farms, onSelectFarm, onEditFarm, onDeleteFarm, isLoading }) 
     return <div className="farm-list loading">Loading farms...</div>;
   }
 
-  if (!farms || farms.length === 0) {
+  const farmsList = Array.isArray(farms) ? farms : [];
+  
+  if (!farmsList || farmsList.length === 0) {
     return <div className="farm-list empty">No farms found. Create one to get started!</div>;
   }
 
@@ -14,7 +16,7 @@ const FarmList = ({ farms, onSelectFarm, onEditFarm, onDeleteFarm, isLoading }) 
     <div className="farm-list">
       <h2>Farms</h2>
       <div className="farms-grid">
-        {farms.map((farm) => (
+        {farmsList.map((farm) => (
           <div key={farm.id} className="farm-card">
             <div className="farm-card-header">
               <h3>{farm.name}</h3>
