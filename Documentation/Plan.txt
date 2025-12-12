@@ -1,4 +1,0 @@
-1. Backend - Springboot
-2. Front-end - React
-3. Http
-4. Db
