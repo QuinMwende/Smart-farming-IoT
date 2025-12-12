@@ -1,0 +1,148 @@
+{
+  "info": {
+    "_postman_id": "3f6a9b2e-5d9c-4f6e-9b7a-0f4c2e8b9f6a",
+    "name": "Smart Farming IoT - API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Farms - Get All",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/farms",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "farms"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Farms - Get By Id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/farms/:id",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "farms",
+            ":id"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Farms - Create",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Demo Farm\",\n  \"location\": \"Nairobi\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/farms",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "farms"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Farms - Update",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Updated Farm Name\",\n  \"location\": \"Updated Location\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/farms/:id",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "farms",
+            ":id"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Farms - Delete",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/farms/:id",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "farms",
+            ":id"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Readings - Get By Farm",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/farms/:id/readings?days=7",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "farms",
+            ":id",
+            "readings"
+          ],
+          "query": [
+            {
+              "key": "days",
+              "value": "7"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
