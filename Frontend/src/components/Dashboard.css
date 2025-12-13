@@ -159,6 +159,32 @@
   border-color: #4caf50;
 }
 
+.sensor-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-generate-readings {
+  padding: 4px 8px;
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 32px;
+}
+
+.btn-generate-readings:hover:not(:disabled) {
+  background-color: #1976D2;
+}
+
+.btn-generate-readings:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .sensor-info {
   display: flex;
   gap: 12px;

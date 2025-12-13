@@ -26,6 +26,8 @@ export const sensorAPI = {
   updateSensor: (id, sensor) => apiClient.put(`/sensors/${id}`, sensor),
   deleteSensor: (id) => apiClient.delete(`/sensors/${id}`),
   getSensorsByFarmId: (farmId) => apiClient.get(`/sensors/farm/${farmId}`),
+  getReadings: (sensorId, days = 7) => apiClient.get(`/sensors/${sensorId}/readings?days=${days}`),
+  generateReadings: (sensorId, days = 10) => apiClient.post(`/sensors/${sensorId}/generate-readings?days=${days}`),
 };
 
 // Sensor readings API

@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface SensorReadingRepository extends JpaRepository<SensorReading, Long> {
     List<SensorReading> findBySensor_Farm_IdAndTimestampAfter(Long farmId, Instant after);
+    List<SensorReading> findBySensor_IdAndTimestampAfter(Long sensorId, Instant after);
 }

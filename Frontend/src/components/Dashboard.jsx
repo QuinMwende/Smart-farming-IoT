@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import FarmList from './FarmList';
 import FarmForm from './FarmForm';
 import SensorForm from './SensorForm';
-import SensorChart from './SensorChart';
+import SensorReadingsChart from './SensorReadingsChart';
 import AlertSystem from './AlertSystem';
 import { farmAPI, sensorAPI, readingAPI, handleApiError } from '../services/api';
 import './Dashboard.css';
@@ -17,6 +17,7 @@ const Dashboard = () => {
   const [showSensorForm, setShowSensorForm] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [chartRefreshKey, setChartRefreshKey] = useState(0);
 
   // Fetch all farms
   useEffect(() => {
@@ -151,6 +152,28 @@ const Dashboard = () => {
     }
   };
 
+  const handleGenerateReadings = async (sensorId) => {
+    try {
+      setError(null);
+      setLoading(true);
+      await sensorAPI.generateReadings(sensorId, 10);
+      alert('Sample readings generated! Refreshing chart...');
+      
+      // Force a refresh by creating a new sensor array
+      const farmResponse = await farmAPI.getFarmById(selectedFarmId);
+      setSelectedFarmData({
+        ...farmResponse.data,
+        sensors: [...(farmResponse.data.sensors || [])],
+      });
+      // Increment refresh key to force chart re-render
+      setChartRefreshKey(prev => prev + 1);
+    } catch (err) {
+      setError(handleApiError(err));
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="dashboard">
       <header className="dashboard-header">
@@ -192,8 +215,7 @@ const Dashboard = () => {
                 <p>📍 {selectedFarmData.location}</p>
               </div>
 
-              <AlertSystem readings={readings} />
-              <SensorChart farmId={selectedFarmId} days={7} />
+              <SensorReadingsChart key={chartRefreshKey} sensors={selectedFarmData.sensors || []} days={7} />
 
               <div className="farm-info">
                 <h3>Farm Information</h3>
@@ -228,13 +250,23 @@ const Dashboard = () => {
                             <span className="sensor-type">{sensor.type}</span>
                             <span className="sensor-location">{sensor.location}</span>
                           </div>
-                          <button 
-                            className="btn-delete-sensor"
-                            onClick={() => handleDeleteSensor(sensor.id)}
-                            title="Delete sensor"
-                          >
-                            ✕
-                          </button>
+                          <div className="sensor-actions">
+                            <button 
+                              className="btn-generate-readings"
+                              onClick={() => handleGenerateReadings(sensor.id)}
+                              title="Generate sample readings"
+                              disabled={loading}
+                            >
+                              📊
+                            </button>
+                            <button 
+                              className="btn-delete-sensor"
+                              onClick={() => handleDeleteSensor(sensor.id)}
+                              title="Delete sensor"
+                            >
+                              ✕
+                            </button>
+                          </div>
                         </div>
                       ))}
                     </div>

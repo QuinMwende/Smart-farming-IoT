@@ -59,3 +59,4 @@ public class FarmController {
         return ResponseEntity.ok(readings);
     }
 }
+

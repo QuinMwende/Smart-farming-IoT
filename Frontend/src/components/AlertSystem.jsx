@@ -33,7 +33,7 @@ const AlertSystem = ({ readings = [] }) => {
     return (
       <div className="alert-system healthy">
         <h3>✓ All Systems Normal</h3>
-        <p>No alerts. All sensor readings are within acceptable thresholds.</p>
+        <p>No alerts. All sensor readings are within acceptable range.</p>
       </div>
     );
   }
