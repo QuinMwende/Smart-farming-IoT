@@ -212,7 +212,7 @@ const Dashboard = () => {
             <>
               <div className="farm-details-header">
                 <h2>{selectedFarmData.name}</h2>
-                <p>📍 {selectedFarmData.location}</p>
+                <p>📌 {selectedFarmData.location}</p>
               </div>
 
               <SensorReadingsChart key={chartRefreshKey} sensors={selectedFarmData.sensors || []} days={7} />
