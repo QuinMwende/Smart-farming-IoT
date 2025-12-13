@@ -178,8 +178,8 @@ const SensorReadingsChart = ({ sensors, days = 7 }) => {
   if (!chartData) {
     return (
       <div className="sensor-chart-empty">
-        <p>📊 No sensor readings yet</p>
-        <p>Click the 📊 button on a sensor to generate sample data</p>
+        <p>📊 No sensor readings yet! Add a sensors to the farm first</p>
+        
       </div>
     );
   }
